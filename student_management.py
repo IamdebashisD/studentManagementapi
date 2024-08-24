@@ -285,7 +285,7 @@ def test():
         'doc string' : haradhan_das.docString.__doc__        
     }
 
-    return jsonify(response)
+    return jsonify(response), 200
 
 
 class methodAnalyticalProccess:
