@@ -180,7 +180,7 @@ def prime() -> int:
 def randdom_OTP_generator():
     import random
     otp = random.randint(10000,1000000 )
-    return jsonify({'Your OTP is': otp})
+    return jsonify({'Your OTP is': otp}), 200
 
 
 @app.route('/retrieve_data', methods=['GET'])
