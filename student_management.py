@@ -213,7 +213,7 @@ def retrieve_data() -> str:
 #     mytuple = (1, 2, 3, 4, 5, 6, 6,7,7)
 #     return jsonify(f'tuple: {mytuple}')
 
-
+# create a class for testing rtre 
 class Employee:
    
     number_of_objects = 0
