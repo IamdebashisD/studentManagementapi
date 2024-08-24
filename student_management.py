@@ -135,7 +135,7 @@ def update_data(id):
             return jsonify({'Error': str(e)}), 500
     
 
-
+# api for even number generator
 @app.route('/api/generate-even-number/<int:limit>', methods = ['GET'])
 def get_even_numbers(limit):
     even_numbers = list(even_num_generate(limit))
