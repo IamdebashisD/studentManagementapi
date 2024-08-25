@@ -20,38 +20,37 @@ mysql = MySQL(app)
   
 # Created a route or an endpoint for create records    
 @app.route('/add_student', methods = ['GET', 'POST'])
-def add_student():
-    if request.method == 'POST':    
+def add_student():   
+    try:
         data = request.get_json()  # Get the json data from the request
         name = data['name']
         address = data['address']
         phone_number = data['phone_number']
+        mycursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        mycursor.execute(
+            "INSERT INTO information (name, address, Phone_number) VALUES (%s, %s, %s)",
+            (name, address, phone_number)
+        )
+        
+        mysql.connection.commit()
 
-        try:
-            mycursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            mycursor.execute(
-                "INSERT INTO information (name, address, Phone_number) VALUES (%s, %s, %s)",
-                (name, address, phone_number)
-            )
-            
-            mysql.connection.commit()
+        # Get the id of newly inserted record
+        new_id = mycursor.lastrowid
+        mycursor.execute("SELECT * FROM information WHERE id = %s", (new_id,))
+        new_record = mycursor.fetchone()
 
-            # Get the id of newly inserted record
-            new_id = mycursor.lastrowid
-            mycursor.execute("SELECT * FROM information WHERE id = %s", (new_id,))
-            new_record = mycursor.fetchone()
+        mycursor.close()
 
-            mycursor.close()
+        # Return success message along with the new record
+        return jsonify({"message" : "Success",
+                        "StatusCode" : 200 ,
+                        "new_record" : new_record,
+                        "lastrowid" : new_id
+                        }), 201
 
-            # Return success message along with the new record
-            return jsonify({"message" : "Success",
-                            "StatusCode" : 200 ,
-                            "new_record" : new_record,
-                            "lastrowid" : new_id
-                            }), 201
-
-        except Exception as e:
-            return jsonify({"error":str(e)}), 500
+    except Exception as e:
+        print(str(e))
+        return jsonify({"error":str(e)}), 500
 
 # Endpoint to show all the sudents records
 @app.route('/show_all_data', methods=['GET'])
