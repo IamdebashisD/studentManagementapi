@@ -24,16 +24,24 @@ def add_student():
     try:
         data = request.get_json()  # Get the json data from the request
 
-        if not data or not data.get('name') or not data.get('address') or not data.get('phone_number'):
-            name = data['name'], address = data['address'], phone_number = data['phone_number']
-            if not (isinstance(name, str) or len(name) > 80) and not (isinstance(address, str) or len(phone_number) > 80) and not (isinstance(phone_number, int) or len(phone_number) > 80):
-                return jsonify({
-                    "error": "Invalid input. All fields (Name, Address, Contact number) are required."
-                }), 400
-            
+        if not data or not data.get('name') or not data.get('address') or not data.get('phone_number'):        
+            return jsonify({
+                "error": "Invalid input. All fields (Name, Address, Contact number) are required."
+            }), 400
+        
+
         name = data['name']
         address = data['address']
         phone_number = data['phone_number']
+
+        if not (isinstance(name, str) and len(name) <= 30):
+            return jsonify({"error": "The 'name' field must be a string and not exceed 40 characters"}), 400
+        elif not (isinstance(address, str) and len(address) <= 80):
+            return jsonify({"error": "The 'address' field must be a string and not exceed 80 characters"}), 400
+        elif not (isinstance(phone_number, str) and len(phone_number) <= 10):
+            return jsonify({"error": "The 'contact number' field must be a string and not exceed 10 characters"}), 400
+            
+        # database insertion    
         mycursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         mycursor.execute(
             "INSERT INTO information (name, address, Phone_number) VALUES (%s, %s, %s)",
