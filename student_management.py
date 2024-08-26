@@ -26,7 +26,7 @@ def add_student():
 
         if not data or not data.get('name') or not data.get('address') or not data.get('phone_number'):
             name = data['name'], address = data['address'], phone_number = data['phone_number']
-            if not (isinstance(name, str) or len(name) > 80) and (isinstance(address, str) or len(phone_number) > 80) and not (isinstance(phone_number, int) or len(phone_number) > 80):
+            if not (isinstance(name, str) or len(name) > 80) and not (isinstance(address, str) or len(phone_number) > 80) and not (isinstance(phone_number, int) or len(phone_number) > 80):
                 return jsonify({
                     "error": "Invalid input. All fields (Name, Address, Contact number) are required."
                 }), 400
