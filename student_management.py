@@ -25,9 +25,12 @@ def add_student():
         data = request.get_json()  # Get the json data from the request
 
         if not data or not data.get('name') or not data.get('address') or not data.get('phone_number'):
-            return jsonify({
-                "error": "Invalid input. All fields (Name, Address, Contact number) are required."
-            }), 400
+            name = data['name'], address = data['address'], phone_number = data['phone_number']
+            if not (isinstance(name, str) or len(name) > 80) and (isinstance(address, str) or len(phone_number) > 80) and not (isinstance(phone_number, int) or len(phone_number) > 80):
+                return jsonify({
+                    "error": "Invalid input. All fields (Name, Address, Contact number) are required."
+                }), 400
+            
         name = data['name']
         address = data['address']
         phone_number = data['phone_number']
@@ -115,28 +118,33 @@ def get_student_byId(id):
 # This route updates a student's data based on given ID
 @app.route('/update_data/<int:id>', methods=['PUT'])
 def update_data(id):
-    if request.method == 'PUT': 
+    try:
         data = request.get_json() # Get the json data from the request
+
+        if not data or not data.get('name') or not data.get('address') or not data.get('phone_number'):
+            return jsonify({
+                "error": "Invalid input. All fields (Name, Address, Contact number) are required."
+            }), 400
+        
         name = data['name']
         address = data['address']
         phone_number = data['phone_number']
 
-        try:
-            mycursor = mysql.connection.cursor()
-            sql = '''UPDATE information SET name = %s, address = %s, Phone_number = %s WHERE id = %s'''
-            mycursor.execute(sql, (name, address, phone_number, id))
-            mysql.connection.commit()
+        mycursor = mysql.connection.cursor()
+        sql = '''UPDATE information SET name = %s, address = %s, Phone_number = %s WHERE id = %s'''
+        mycursor.execute(sql, (name, address, phone_number, id))
+        mysql.connection.commit()
 
-            # Check if the record was updated
-            if mycursor.rowcount > 0:
-                mycursor.close()
-                return jsonify({'massage' : 'Record updated successfully.'}), 200
-            else:
-                mycursor.close()
-                return jsonify({"Message" : "No record found with this ID"}), 404
+        # Check if the record was updated
+        if mycursor.rowcount > 0:
+            mycursor.close()
+            return jsonify({'message' : 'Record updated successfully.'}), 200
+        else:
+            mycursor.close()
+            return jsonify({"Message" : "No record found with this ID"}), 404
 
-        except Exception as e:
-            return jsonify({'Error': str(e)}), 500
+    except Exception as e:
+        return jsonify({'Error': str(e)}), 500
     
 
 # api for even number generator
