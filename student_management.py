@@ -24,10 +24,10 @@ def add_student():
     try:
         data = request.get_json()  # Get the json data from the request
 
-        if not data or not data.get('name') or data.get('address') or not data.get('phone_number'):
+        if not data or not data.get('name') or not data.get('address') or not data.get('phone_number'):
             return jsonify({
                 "error": "Invalid input. All fields (Name, Address, Contact number) are required."
-            })
+            }), 400
         name = data['name']
         address = data['address']
         phone_number = data['phone_number']
