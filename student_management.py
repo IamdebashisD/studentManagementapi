@@ -89,6 +89,7 @@ def students_data():
 # Read operation  
 @app.route('/delete_student/<int:id>', methods=['DELETE'])
 def delete_data(id):
+    mycursor = None
     try:
         mycursor = mysql.connection.cursor()
         # Execute the delete query
@@ -104,18 +105,22 @@ def delete_data(id):
             return jsonify({"Message": "No record found with this Id."}), 404
             
     except Exception as e:
-        return jsonify({"error": str(e)}), 500 
+        return jsonify({"error": str(e)}), 500
+    
+    finally:
+        if mycursor:
+            mycursor.close()
     
 # Creating an endpoint for get student by id
 # Read operation by individual Id
 @app.route('/get_student/<int:id>', methods= ['GET'])
 def get_student_byId(id):
+    mycursor = None
     try:
         mycursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         sql = "select * from information where id=%s"
         mycursor.execute(sql,(id,))
         user = mycursor.fetchone()
-        mycursor.close()
         if user:
             return jsonify(user), 200
         else:
@@ -123,6 +128,11 @@ def get_student_byId(id):
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+    finally:
+        if mycursor:
+            mycursor.close()
+
 
 
 # This route updates a student's data based on given ID
@@ -169,7 +179,7 @@ def update_data(id):
         if mycursor:
             mycursor.close()
     
-    
+
 # api for even number generator
 @app.route('/api/generate-even-number/<int:limit>', methods = ['GET'])
 def get_even_numbers(limit):
