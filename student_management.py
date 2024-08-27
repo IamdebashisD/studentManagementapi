@@ -36,9 +36,9 @@ def add_student():
 
         if not (isinstance(name, str) and len(name) <= 30):
             return jsonify({"error": "The 'name' field must be a string and not exceed 40 characters"}), 400
-        elif not (isinstance(address, str) and len(address) <= 80):
+        if not (isinstance(address, str) and len(address) <= 80):
             return jsonify({"error": "The 'address' field must be a string and not exceed 80 characters"}), 400
-        elif not (isinstance(phone_number, str) and len(phone_number) <= 10):
+        if not (isinstance(phone_number, str) and phone_number.isdigit() and len(phone_number) == 10):
             return jsonify({"error": "The 'contact number' field must be a string and not exceed 10 characters"}), 400
             
         # database insertion    
@@ -55,7 +55,6 @@ def add_student():
         mycursor.execute("SELECT * FROM information WHERE id = %s", (new_id,))
         new_record = mycursor.fetchone()
 
-        mycursor.close()
 
         # Return success message along with the new record
         return jsonify({"message" : "Success",
@@ -67,6 +66,9 @@ def add_student():
     except Exception as e:
         print(str(e))
         return jsonify({"error":str(e)}), 500
+    finally:
+        if mycursor:
+            mycursor.close()
 
 # Endpoint to show all the sudents records
 @app.route('/show_all_data', methods=['GET'])
@@ -126,6 +128,7 @@ def get_student_byId(id):
 # This route updates a student's data based on given ID
 @app.route('/update_data/<int:id>', methods=['PUT'])
 def update_data(id):
+    mycursor = None
     try:
         data = request.get_json() # Get the json data from the request
 
@@ -137,6 +140,14 @@ def update_data(id):
         name = data['name']
         address = data['address']
         phone_number = data['phone_number']
+
+        # Additional validation checks for length and type
+        if not (isinstance(name, str) and len(name) <= 30):
+            return jsonify({"error": "The 'name' field must be a string and not exceed 40 characters"}), 400
+        if not (isinstance(address, str) and len(address) <= 80):
+            return jsonify({"error": "The 'address' field must be a string and not exceed 80 characters"}), 400
+        if not (isinstance(phone_number, str) and phone_number.isdigit() and len(phone_number) == 10):
+            return jsonify({"error": "The 'contact number' field must be a string and not exceed 10 characters"}), 400
 
         mycursor = mysql.connection.cursor()
         sql = '''UPDATE information SET name = %s, address = %s, Phone_number = %s WHERE id = %s'''
@@ -153,6 +164,10 @@ def update_data(id):
 
     except Exception as e:
         return jsonify({'Error': str(e)}), 500
+    
+    finally:
+        if mycursor:
+            mycursor.close()
     
 
 # api for even number generator
