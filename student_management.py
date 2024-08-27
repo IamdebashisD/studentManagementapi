@@ -169,7 +169,7 @@ def update_data(id):
         if mycursor:
             mycursor.close()
     
-
+    
 # api for even number generator
 @app.route('/api/generate-even-number/<int:limit>', methods = ['GET'])
 def get_even_numbers(limit):
