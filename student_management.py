@@ -71,7 +71,7 @@ def add_student():
         if mycursor:
             mycursor.close()
 
-# Endpoint to show all the sudents records
+# Endpoint to show all the student records
 @app.route('/show_all_data', methods=['GET'])
 def students_data():
         mycursor = None
@@ -81,10 +81,10 @@ def students_data():
             mycursor.execute(sql)
             rows = mycursor.fetchall() 
 
-            return jsonify(rows), 200
+            return jsonify({"data": rows}), 200
         
         except Exception as e:
-            return jsonify({"error":str(e)}), 500 
+            return jsonify({"error":str(e), "status": 500}), 500 
         
         finally:
             if mycursor:
@@ -127,12 +127,12 @@ def get_student_byId(id):
         mycursor.execute(sql,(id,))
         user = mycursor.fetchone()
         if user:
-            return jsonify(user), 200
+            return jsonify({"data":user, "message": "Success", "status": 200}), 200
         else:
-            return jsonify({"Message": "No student found with this id."}), 404    
+            return jsonify({"Message": "No student found with this id.", "status": 404}), 404    
     
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': str(e), 'status': 500}), 500
 
     finally:
         if mycursor:
