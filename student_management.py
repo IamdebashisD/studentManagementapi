@@ -80,7 +80,6 @@ def students_data():
             sql = '''SELECT * FROM information'''
             mycursor.execute(sql)
             rows = mycursor.fetchall() 
-
             return jsonify({"data": rows}), 200
         
         except Exception as e:
@@ -103,10 +102,8 @@ def delete_data(id):
         
         # Check if any row were affected (if the id existed)
         if mycursor.rowcount > 0:
-            mycursor.close()
             return jsonify({"Message": "Record deleted successfully."}), 200
         else:
-            mycursor.close()
             return jsonify({"Message": "No record found with this Id."}), 404
             
     except Exception as e:
@@ -171,10 +168,8 @@ def update_data(id):
 
         # Check if the record was updated
         if mycursor.rowcount > 0:
-            mycursor.close()
             return jsonify({'message' : 'Record updated successfully.'}), 200
         else:
-            mycursor.close()
             return jsonify({"Message" : "No record found with this ID"}), 404
 
     except Exception as e:
