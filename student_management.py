@@ -21,6 +21,7 @@ mysql = MySQL(app)
 # Created a route or an endpoint for create records    
 @app.route('/add_student', methods = ['GET', 'POST'])
 def add_student():   
+    mycursor = None
     try:
         data = request.get_json()  # Get the json data from the request
 
@@ -73,17 +74,21 @@ def add_student():
 # Endpoint to show all the sudents records
 @app.route('/show_all_data', methods=['GET'])
 def students_data():
+        mycursor = None
         try:
             mycursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             sql = '''SELECT * FROM information'''
             mycursor.execute(sql)
             rows = mycursor.fetchall() 
-            mycursor.close()
 
             return jsonify(rows), 200
         
         except Exception as e:
             return jsonify({"error":str(e)}), 500 
+        
+        finally:
+            if mycursor:
+                mycursor.close()
 
 # Create an endpointy for delete student records by specific Id
 # Read operation  
