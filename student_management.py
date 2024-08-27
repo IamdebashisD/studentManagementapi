@@ -127,7 +127,7 @@ def get_student_byId(id):
         mycursor.execute(sql,(id,))
         user = mycursor.fetchone()
         if user:
-            return jsonify({"data":user, "message": "Success", "status": 200}), 200
+            return jsonify({"data": user, "message": "Success", "status": 200}), 200
         else:
             return jsonify({"Message": "No student found with this id.", "status": 404}), 404    
     
