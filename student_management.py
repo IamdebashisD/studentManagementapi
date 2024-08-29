@@ -64,7 +64,7 @@ def add_student():
         
         mysql.connection.commit()
 
-        # Send a welcome email if the email is valid and a Gmail address
+        # Send a welcome email if the email is valid and exist
         if email.endswith('@gmail.com'):
             msg = Message(
             'Welcome to our service',
