@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
 import json
 from flask_mysqldb import MySQL
+from flask_mail import Mail, Message
 import MySQLdb.cursors
+import re
 
 app = Flask(__name__)
 
@@ -9,12 +11,20 @@ def even_num_generate(limit):
     for i in range(2, limit+1, 2):
         yield i
 
+# This is Flask to Flask-mail configuration
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'adebashisdas626@gmail.com'
+app.config['MAIL_PASSWORD'] = 'nhnf ijme dryb cqhq'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)   # instance of the mail class        
+
 # This is Flask to MySQL configuration
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = '62674123'
 app.config['MYSQL_DB'] = 'students_db'
-
 
 mysql = MySQL(app)
   
@@ -25,7 +35,7 @@ def add_student():
     try:
         data = request.get_json()  # Get the json data from the request
 
-        if not data or not data.get('name') or not data.get('address') or not data.get('phone_number'):        
+        if not data or not data.get('name') or not data.get('address') or not data.get('phone_number') or not data.get('email'):        
             return jsonify({
                 "error": "Invalid input. All fields (Name, Address, Contact number) are required."
             }), 400
@@ -34,6 +44,7 @@ def add_student():
         name = data['name']
         address = data['address']
         phone_number = data['phone_number']
+        email = data['email']
 
         if not (isinstance(name, str) and len(name) <= 30):
             return jsonify({"error": "The 'name' field must be a string and not exceed 40 characters"}), 400
@@ -41,15 +52,26 @@ def add_student():
             return jsonify({"error": "The 'address' field must be a string and not exceed 80 characters"}), 400
         if not (isinstance(phone_number, str) and phone_number.isdigit() and len(phone_number) == 10):
             return jsonify({"error": "The 'contact number' field must be a string and not exceed 10 characters"}), 400
+        if not (isinstance(email, str) and len(email) <= 255 and re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email)):
+            return jsonify({"error": "The 'email' field must be a valid email address"}), 400
             
         # database insertion    
         mycursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         mycursor.execute(
-            "INSERT INTO information (name, address, Phone_number) VALUES (%s, %s, %s)",
-            (name, address, phone_number)
+            "INSERT INTO information (name, address, Phone_number, email) VALUES (%s, %s, %s, %s)",
+            (name, address, phone_number, email)
         )
         
         mysql.connection.commit()
+
+        # Send a welcome email if the email is valid and a Gmail address
+        if email.endswith('@gmail.com'):
+            msg = Message(
+            'Welcome to our service',
+            sender = 'adebashisdas626@gmail.com',
+            recipients = [email])
+        msg.body = f'Hello {name},\n\nThank you for registering with our service!'
+        mail.send(msg)
 
         # Get the id of newly inserted record
         new_id = mycursor.lastrowid
@@ -239,7 +261,7 @@ def retrieve_data() -> str:
         content = {}
         employee = []
         for result in rowValues:
-            content = {'id': result['id'], 'name': result['name'], 'Address': result['address'], 'Contact': result['Phone_number']}
+            content = {'id': result['id'], 'name': result['name'], 'Address': result['address'], 'Email': result['email'], 'Contact': result['Phone_number']}
             employee.append(content)
         return jsonify(employee), 200
 
