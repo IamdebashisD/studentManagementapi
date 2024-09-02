@@ -158,7 +158,6 @@ def get_student_byId(id):
             mycursor.close()
 
 
-
 # This route updates a student's data based on given ID
 @app.route('/update_data/<int:id>', methods=['PUT'])
 def update_data(id):
