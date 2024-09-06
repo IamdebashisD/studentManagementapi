@@ -323,6 +323,7 @@ class Employee:
 def test():  
     haradhan_das = Employee("Haradhan Das", 400453456678, "Junior Python developer", 25, "Infosys")
     akhilesh_ghosh = Employee("Akhilesh Ghosh", 10023423454, "Junior Python developer", 27, "Wippro")
+    vishal_mehra = Employee("Vishal Mehra", 355434266334, "Senior frontend developer", 44, "TCS-Tata Consultant Service")
     # haradhan_das.name = 'Debashis Das' # you cannt over write the name attribute , it become a private attributes
 
     user_details = haradhan_das.showDetails()
@@ -330,6 +331,9 @@ def test():
 
     userTwo_details = akhilesh_ghosh.showDetails()
     userTwo_description = akhilesh_ghosh.get_description()
+
+    userThree_details = vishal_mehra.showDetails()
+    userThree_description = vishal_mehra.get_description()
 
 
     response = {
@@ -340,6 +344,10 @@ def test():
         'UserTwo':{
             'user_details': userTwo_details,
             'user_description' : userTwo_description
+        },
+        'UserThree':{
+        'user_details': userThree_details,
+        'user_description' : userThree_description
         },
         'list':{
             'return a list': haradhan_das.return_aList()
