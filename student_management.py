@@ -367,14 +367,17 @@ class methodAnalyticalProccess:
         return {'data_one': 'value of method one'}
     def method_two(self):
         return {'data_two': 'value of method two'}
+    def method_three(self):
+        return {'data_three': 'value of method three'}
 
 @app.route('/combined_data', methods = ['GET'])
 def combined_data():
     objectp = methodAnalyticalProccess()
     data_one = objectp.method_one()
     data_two = objectp.method_two()
+    data_three = objectp.method_three()
 
-    combined_data = {**data_one, **data_two}
+    combined_data = {**data_one, **data_two, **data_three}
     return jsonify(combined_data)
 
 
