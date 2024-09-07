@@ -4,7 +4,7 @@ from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
 import MySQLdb.cursors
 import re
-
+ 
 app = Flask(__name__)
 
 def even_num_generate(limit):
@@ -369,6 +369,8 @@ class methodAnalyticalProccess:
         return {'data_two': 'value of method two'}
     def method_three(self):
         return {'data_three': 'value of method three'}
+    def method_four(self):
+        return {'data_four': 'value of method four'}
 
 @app.route('/combined_data', methods = ['GET'])
 def combined_data():
@@ -376,8 +378,10 @@ def combined_data():
     data_one = objectp.method_one()
     data_two = objectp.method_two()
     data_three = objectp.method_three()
+    data_four = objectp.method_four()
 
-    combined_data = {**data_one, **data_two, **data_three}
+
+    combined_data = {**data_one, **data_two, **data_three, **data_four}
     return jsonify(combined_data)
 
 
