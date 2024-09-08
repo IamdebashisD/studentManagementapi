@@ -163,7 +163,7 @@ def get_student_byId(id):
 def update_data(id):
     mycursor = None
     try:
-        data = request.get_json() # Get the json data from the request
+        data = request.get_json() # Get the json data from the request dgadjagd
 
         if not data or not data.get('name') or not data.get('address') or not data.get('phone_number'):
             return jsonify({
