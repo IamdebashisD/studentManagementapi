@@ -1,1 +1,2 @@
 add another marketing message section.
+add footer note
