@@ -1,2 +1,4 @@
 add another marketing message section.
 add footer note
+
+2025 footer note added
