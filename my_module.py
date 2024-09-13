@@ -112,7 +112,7 @@ for student, score in scores.items():
 print("Results", results)
 
 
-result = {student: "pass" if scores[student] >= 60 else "Fail" for student, score in scores.items()}
+result = {student: "pass" if scores[student] >= 60 else "Fail" for student, score in scores.items()} # dictionary comprehension
 print("Result:",result)
 
 import json
