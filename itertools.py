@@ -306,3 +306,21 @@ for i in itertools.cycle("ab"):
     
     print(i, end =" ")
     count += 1
+
+
+
+l = ['Geeks', 'for', 'geeks']
+
+iterators = itertools.cycle(l)
+
+for i in range(3):
+    print(next(iterators), end= " ")
+
+
+
+l = [1, 2, 3]
+
+iterators = itertools.cycle(l)
+
+for i in range(6):
+    print(next(iterators), end= " ")        
