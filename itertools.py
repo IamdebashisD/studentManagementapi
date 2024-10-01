@@ -323,4 +323,4 @@ l = [1, 2, 3]
 iterators = itertools.cycle(l)
 
 for i in range(6):
-    print(next(iterators), end= " ")        
+    print(next(iterators), end= " ")      
