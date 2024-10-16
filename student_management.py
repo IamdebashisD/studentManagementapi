@@ -389,6 +389,23 @@ def combined_data():
     return jsonify(combined_data)
 
 
+@app.route('/lenear_search', methods = ['GET'])
+def lenear_search_Two():
+    my_array = request.args.getlist('array', type = int)
+    target = request.args.get('target', type = int)
+
+    target = int(target)
+    default_return = jsonify({'message':'Failed'}) 
+    for index , value in enumerate(my_array):
+        if value == target:
+            return jsonify({"target": target,
+                           "message": "target found in the container",
+                           "position": index+1
+            })
+    return default_return
+
+
+
 if __name__  == "__main__":
     app.run(debug = True)
 
