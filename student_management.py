@@ -70,8 +70,8 @@ def add_student():
             'Welcome to our service',
             sender = 'adebashisdas626@gmail.com',
             recipients = [email])
-        msg.body = f'Hello {name},\n\nThank you for registering with our service!'
-        mail.send(msg)
+            msg.body = f'Hello {name},\n\nThank you for registering with our service!'
+            mail.send(msg)
 
         # Get the id of newly inserted record
         new_id = mycursor.lastrowid
