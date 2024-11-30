@@ -3,7 +3,7 @@ import json
 from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
 import MySQLdb.cursors
-from typing import Any
+from typing import Any, Optional
 import MySQLdb
 import re
  
@@ -33,9 +33,9 @@ mysql = MySQL(app)
 # Created a route or an endpoint for create records    
 @app.route('/add_student', methods = ['GET', 'POST'])
 def add_student():   
-    mycursor = None
+    mycursor: None = None
     try:
-        data: dict = request.get_json()  # Get the json data from the request
+        data: dict[str, str] = request.get_json()  # Get the json data from the request
 
         if not data or not data.get('name') or not data.get('address') or not data.get('phone_number') or not data.get('email'):        
             return jsonify({
@@ -43,10 +43,10 @@ def add_student():
             }), 400
         
 
-        name = data['name']
-        address = data['address']
-        phone_number = data['phone_number']
-        email = data['email']
+        name: str = data['name']
+        address: str = data['address']
+        phone_number: str = data['phone_number']
+        email: str = data['email']
 
         if not (isinstance(name, str) and len(name) <= 30):
             return jsonify({"error": "The 'name' field must be a string and not exceed 40 characters"}), 400
@@ -84,7 +84,7 @@ def add_student():
             mail.send(msg)
 
         # Get the id of newly inserted record
-        new_id = mycursor.lastrowid
+        new_id: Optional[int] = mycursor.lastrowid
         mycursor.execute("SELECT * FROM information WHERE id = %s", (new_id,))
         new_record = mycursor.fetchone()
 
@@ -105,10 +105,10 @@ def add_student():
 # Endpoint to show all the student records
 @app.route('/show_all_data', methods=['GET'])
 def students_data():
-        mycursor = None
+        mycursor: None = None
         try:
             mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            sql = '''SELECT * FROM information'''
+            sql: str = '''SELECT * FROM information'''
             mycursor.execute(sql)
             rows = mycursor.fetchall() 
             return jsonify({"data": rows}), 200
@@ -124,7 +124,7 @@ def students_data():
 # Read operation  
 @app.route('/delete_student/<int:id>', methods = ['DELETE'])
 def delete_data(id):
-    mycursor = None
+    mycursor: None = None
     try:
         mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor()
         # Execute the delete query
@@ -148,10 +148,10 @@ def delete_data(id):
 # Read operation by individual Id
 @app.route('/get_student/<int:id>', methods = ['GET'])
 def get_student_byId(id):
-    mycursor = None
+    mycursor: None = None
     try:
         mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        sql = "select * from information where id = %s"
+        sql: str = "select * from information where id = %s"
         mycursor.execute(sql, (id,))
         user = mycursor.fetchone()
         if user:
@@ -170,18 +170,18 @@ def get_student_byId(id):
 # This route updates a student's data based on given ID
 @app.route('/update_data/<int:id>', methods = ['PUT'])
 def update_data(id):
-    mycursor = None
+    mycursor: None = None
     try:
-        data: dict = request.get_json() # Get the json data from the request dgadjagd
+        data: dict[str, str] = request.get_json() # Get the json data from the request dgadjagd
 
         if not data or not data.get('name') or not data.get('address') or not data.get('phone_number'):
             return jsonify({
                 "error": "Invalid input. All fields (Name, Address, Contact number) are required."
             }), 400
         
-        name = data['name']
-        address = data['address']
-        phone_number = data['phone_number']
+        name: str = data['name']
+        address: str = data['address']
+        phone_number: str = data['phone_number']
 
         # Additional validation checks for length and type
         if not (isinstance(name, str) and len(name) <= 30):
@@ -192,7 +192,7 @@ def update_data(id):
             return jsonify({"error": "The 'contact number' field must be a string and not exceed 10 characters"}), 400
 
         mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor()
-        sql = '''UPDATE information SET name = %s, address = %s, Phone_number = %s WHERE id = %s'''
+        sql: str = '''UPDATE information SET name = %s, address = %s, Phone_number = %s WHERE id = %s'''
         mycursor.execute(sql, (name, address, phone_number, id))
         mysql.connection.commit()
 
@@ -227,9 +227,9 @@ def square(num):
 
 
 @app.route('/fibonacci_series', methods = ['GET'])
-def fibonacci():
-    term = 10
-    fib_series = [0, 1]
+def fibonacci() -> list[int]:
+    term: int = 10
+    fib_series: list[int] = [0, 1]
     for i in range(2, term+1):
         next_term = fib_series[-1] + fib_series[-2]
         fib_series.append(next_term)
@@ -239,8 +239,8 @@ def fibonacci():
 
 @app.route('/prime-number-or-not', methods = ['GET'])
 def prime() -> int:
-    number = 59
-    isprime = True
+    number: int = 59
+    isprime: bool = True
 
     for i in range (2, number):
         if number > 1 and number % i == 0:
@@ -252,9 +252,9 @@ def prime() -> int:
 
 
 @app.route('/OTP-generator', methods = ['GET'])
-def randdom_OTP_generator():
+def randdom_OTP_generator() -> int:
     import random
-    otp = random.randint(10000,1000000 )
+    otp: int = random.randint(10000,1000000 )
     return jsonify({'Your OTP is': otp}), 200
 
 
@@ -262,12 +262,12 @@ def randdom_OTP_generator():
 def retrieve_data() -> str:
     try: 
         mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        sql = "SELECT * FROM information"
+        sql: str = "SELECT * FROM information"
         mycursor.execute(sql)
         rowValues = mycursor.fetchall()
         mycursor.close()
-        content = {}
-        employee = []
+        content: dict = {}
+        employee: list = []
         for result in rowValues:
             content = {'id': result['id'], 'name': result['name'], 'Address': result['address'], 'Email': result['email'], 'Contact': result['Phone_number']}
             employee.append(content)
