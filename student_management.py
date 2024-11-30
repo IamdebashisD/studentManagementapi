@@ -58,7 +58,7 @@ def add_student():
             return jsonify({"error": "The 'email' field must be a valid email address"}), 400
             
            
-        mycursor:MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
 
         #check if email id exist or not 
         mycursor.execute("SELECT email FROM information WHERE email = %s", (email,))
@@ -91,14 +91,13 @@ def add_student():
 
         # Return success message along with the new record
         return jsonify({"message" : "Success",
-                        "StatusCode" : 200 ,
+                        "StatusCode" : 200,
                         "new_record" : new_record,
                         "lastrowid" : new_id
                         }), 201
 
     except Exception as e:
-        print(str(e))
-        return jsonify({"error":str(e)}), 500
+        return jsonify({"error": str(e)}), 500
     finally:
         if mycursor:
             mycursor.close()
@@ -115,7 +114,7 @@ def students_data():
             return jsonify({"data": rows}), 200
         
         except Exception as e:
-            return jsonify({"error":str(e), "status": 500}), 500 
+            return jsonify({"error": str(e), "status": 500}), 500 
         
         finally:
             if mycursor:
@@ -123,7 +122,7 @@ def students_data():
 
 # Create an endpointy for delete student records by specific Id
 # Read operation  
-@app.route('/delete_student/<int:id>', methods=['DELETE'])
+@app.route('/delete_student/<int:id>', methods = ['DELETE'])
 def delete_data(id):
     mycursor = None
     try:
@@ -147,13 +146,13 @@ def delete_data(id):
     
 # Creating an endpoint for get student by id
 # Read operation by individual Id
-@app.route('/get_student/<int:id>', methods= ['GET'])
+@app.route('/get_student/<int:id>', methods = ['GET'])
 def get_student_byId(id):
     mycursor = None
     try:
         mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        sql = "select * from information where id=%s"
-        mycursor.execute(sql,(id,))
+        sql = "select * from information where id = %s"
+        mycursor.execute(sql, (id,))
         user = mycursor.fetchone()
         if user:
             return jsonify({"data": user, "message": "Success", "status": 200}), 200
@@ -169,7 +168,7 @@ def get_student_byId(id):
 
 
 # This route updates a student's data based on given ID
-@app.route('/update_data/<int:id>', methods=['PUT'])
+@app.route('/update_data/<int:id>', methods = ['PUT'])
 def update_data(id):
     mycursor = None
     try:
@@ -199,7 +198,7 @@ def update_data(id):
 
         # Check if the record was updated
         if mycursor.rowcount > 0:
-            return jsonify({'message' : 'Record updated successfully.'}), 200
+            return jsonify({"message" : "Record updated successfully."}), 200
         else:
             return jsonify({"Message" : "No record found with this ID"}), 404
 
@@ -259,7 +258,7 @@ def randdom_OTP_generator():
     return jsonify({'Your OTP is': otp}), 200
 
 
-@app.route('/retrieve_data', methods=['GET'])
+@app.route('/retrieve_data', methods = ['GET'])
 def retrieve_data() -> str:
     try: 
         mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
