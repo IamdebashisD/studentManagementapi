@@ -3,6 +3,8 @@ import json
 from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
 import MySQLdb.cursors
+from typing import Any
+import MySQLdb
 import re
  
 app = Flask(__name__)
@@ -55,8 +57,16 @@ def add_student():
         if not (isinstance(email, str) and len(email) <= 255 and re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email)):
             return jsonify({"error": "The 'email' field must be a valid email address"}), 400
             
-        # database insertion    
-        mycursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+           
+        mycursor:MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+
+        #check if email id exist or not 
+        mycursor.execute("SELECT email FROM information WHERE email = %s", (email,))
+        existing_email = mycursor.fetchone()
+        if existing_email:
+            return jsonify({"message": "Invalid email! Email already exist."}), 400
+        
+        # database insertion
         mycursor.execute(
             "INSERT INTO information (name, address, Phone_number, email) VALUES (%s, %s, %s, %s)",
             (name, address, phone_number, email)
@@ -98,7 +108,7 @@ def add_student():
 def students_data():
         mycursor = None
         try:
-            mycursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             sql = '''SELECT * FROM information'''
             mycursor.execute(sql)
             rows = mycursor.fetchall() 
@@ -117,7 +127,7 @@ def students_data():
 def delete_data(id):
     mycursor = None
     try:
-        mycursor = mysql.connection.cursor()
+        mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor()
         # Execute the delete query
         mycursor.execute("DELETE FROM information WHERE id = %s", (id,))
         mysql.connection.commit()
@@ -141,7 +151,7 @@ def delete_data(id):
 def get_student_byId(id):
     mycursor = None
     try:
-        mycursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         sql = "select * from information where id=%s"
         mycursor.execute(sql,(id,))
         user = mycursor.fetchone()
@@ -182,7 +192,7 @@ def update_data(id):
         if not (isinstance(phone_number, str) and phone_number.isdigit() and len(phone_number) == 10):
             return jsonify({"error": "The 'contact number' field must be a string and not exceed 10 characters"}), 400
 
-        mycursor = mysql.connection.cursor()
+        mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor()
         sql = '''UPDATE information SET name = %s, address = %s, Phone_number = %s WHERE id = %s'''
         mycursor.execute(sql, (name, address, phone_number, id))
         mysql.connection.commit()
@@ -252,7 +262,7 @@ def randdom_OTP_generator():
 @app.route('/retrieve_data', methods=['GET'])
 def retrieve_data() -> str:
     try: 
-        mycursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         sql = "SELECT * FROM information"
         mycursor.execute(sql)
         rowValues = mycursor.fetchall()
