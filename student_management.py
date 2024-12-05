@@ -258,7 +258,7 @@ def random_OTP_generator() -> Response:
 
 
 @app.route('/retrieve_data', methods = ['GET'])
-def retrieve_data() -> list:
+def retrieve_data() -> Response:
     try: 
         mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         sql: str = "SELECT * FROM information"
@@ -266,7 +266,7 @@ def retrieve_data() -> list:
         rowValues = mycursor.fetchall()
         mycursor.close()
         content: dict = {}
-        employee: list = []
+        employee: list[dict] = []
         for result in rowValues:
             content = {'id': result['id'], 'name': result['name'], 'Address': result['address'], 'Email': result['email'], 'Contact': result['Phone_number']}
             employee.append(content)
