@@ -1,9 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import json
 from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
 import MySQLdb.cursors
-from typing import Any, Optional
+from typing import Any, Optional, NoReturn
 import MySQLdb
 import re
  
@@ -252,14 +252,14 @@ def prime() -> int:
 
 
 @app.route('/OTP-generator', methods = ['GET'])
-def randdom_OTP_generator() -> int:
+def randdom_OTP_generator() -> Response:
     import random
-    otp: int = random.randint(10000,1000000 )
+    otp: int = random.randint(10000,1000000)
     return jsonify({'Your OTP is': otp}), 200
 
 
 @app.route('/retrieve_data', methods = ['GET'])
-def retrieve_data() -> str:
+def retrieve_data() -> list:
     try: 
         mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         sql: str = "SELECT * FROM information"
@@ -291,8 +291,8 @@ def retrieve_data() -> str:
 # create a class for testing api test
 class Employee:
    
-    number_of_objects = 0
-    def __init__(self, name, id, developer, age, company_name) -> None:
+    number_of_objects: int = 0
+    def __init__(self, name: str, id: int, developer: str, age: int, company_name: str) -> None:
         self.__name = name
         self.__id = id
         self.developer = developer
@@ -300,21 +300,21 @@ class Employee:
         self.company_name = company_name
         Employee.number_of_objects += 1
 
-    def showDetails(self) ->None:
+    def showDetails(self) -> None:
         return {'name': self.__name, 'id': self.__id, 'position': self.developer,'age': self.age , 'company_name': self.company_name}
     
-    def get_description(self) ->None:
+    def get_description(self) -> None:
         return f'Hi my name is {self.__name}, working at {self.company_name} as a {self.developer}'
     # @staticmethod    
-    def return_aList(self) ->None:
+    def return_aList(self) -> None:
         return [
             [1,2,3,'Iron man',False,277.98],
             [2,3,65,4,True,'Captain america']
         ]
-    def list_Of_Dictionaries(self) ->None:
-        country = ['south korea', 'india']
-        imbd_rating = [8.4, 8.7, 8.2]
-        web_series_data = [
+    def list_Of_Dictionaries(self) -> None:
+        country: list[str] = ['south korea', 'india']
+        imbd_rating: list[float] = [8.4, 8.7, 8.2]
+        web_series_data: list[dict] = [
             {
                 'Queen of Tears': {'country': country[0], 'imbd rating': imbd_rating[2]},
                 'Vincenzo': {'country': country[0], 'imbd rating': imbd_rating[0]}, 
@@ -323,12 +323,12 @@ class Employee:
             }
         ]
         return web_series_data       
-    def docString(self)->None:
+    def docString(self) -> None:
         '''Doc string is here'''
         return None
 
     
-@app.route('/test', methods= [ 'GET' ])
+@app.route('/test', methods = ['GET'])
 def test():  
     haradhan_das: Employee = Employee("Haradhan Das", 40041534456678, "Junior Python developer", 25, "Infosys")
     akhilesh_ghosh: Employee = Employee("Akhilesh Ghosh", 100234243454, "Junior Python developer", 27, "Wippro")
@@ -398,19 +398,36 @@ def combined_data():
     return jsonify(combined_data)
 
 
-@app.route('/lenear_search', methods = ['GET'])
-def lenear_search_Two():
+@app.route('/linear_search', methods = ['GET'])
+def linear_search_Two() -> Response | NoReturn:
+    '''
+    Perform a linear search on a given array to find the target value
+
+    Query parameter:
+    - array: List of integer to search in.
+    - target: Integer value to searcg for.
+
+    Returns:
+    - JSON response indicating success or failure of the search.  
+    '''
+    # Extract the array and target from query parameters
     my_array = request.args.getlist('array', type = int)
     target = request.args.get('target', type = int)
 
+    # Validate inputs
+    if not my_array or target is None:
+        return jsonify({"message": "Invalid input!, array and target is required"}), 400
+
     target = int(target)
-    default_return = jsonify({'message':'Failed'}) 
+    default_return: Response = jsonify({'message': 'Target not found'}), 404
+
+    # Perform the linear search
     for index , value in enumerate(my_array):
         if value == target:
             return jsonify({"target": target,
                            "message": "target found in the container",
                            "position": index+1
-            })
+            }), 200
     return default_return
 
 
