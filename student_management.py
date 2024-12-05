@@ -252,7 +252,7 @@ def prime() -> int:
 
 
 @app.route('/OTP-generator', methods = ['GET'])
-def randdom_OTP_generator() -> Response:
+def random_OTP_generator() -> Response:
     import random
     otp: int = random.randint(10000,1000000)
     return jsonify({'Your OTP is': otp}), 200
@@ -290,7 +290,6 @@ def retrieve_data() -> list:
 
 # create a class for testing api test
 class Employee:
-   
     number_of_objects: int = 0
     def __init__(self, name: str, id: int, developer: str, age: int, company_name: str) -> None:
         self.__name = name
