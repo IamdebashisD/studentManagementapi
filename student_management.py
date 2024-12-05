@@ -32,7 +32,7 @@ mysql = MySQL(app)
   
 # Created a route or an endpoint for create records    
 @app.route('/add_student', methods = ['GET', 'POST'])
-def add_student():   
+def add_student() -> Response:   
     mycursor: None = None
     try:
         data: dict[str, str] = request.get_json()  # Get the json data from the request
@@ -104,7 +104,7 @@ def add_student():
 
 # Endpoint to show all the student records
 @app.route('/show_all_data', methods=['GET'])
-def students_data():
+def students_data() -> Response:
         mycursor: None = None
         try:
             mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -123,7 +123,7 @@ def students_data():
 # Create an endpointy for delete student records by specific Id
 # Read operation  
 @app.route('/delete_student/<int:id>', methods = ['DELETE'])
-def delete_data(id):
+def delete_data(id) -> Response:
     mycursor: None = None
     try:
         mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor()
@@ -147,7 +147,7 @@ def delete_data(id):
 # Creating an endpoint for get student by id
 # Read operation by individual Id
 @app.route('/get_student/<int:id>', methods = ['GET'])
-def get_student_byId(id):
+def get_student_byId(id) -> Response:
     mycursor: None = None
     try:
         mycursor: MySQLdb.cursors.Cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -166,10 +166,9 @@ def get_student_byId(id):
         if mycursor:
             mycursor.close()
 
-
 # This route updates a student's data based on given ID
 @app.route('/update_data/<int:id>', methods = ['PUT'])
-def update_data(id):
+def update_data(id) -> Response:
     mycursor: None = None
     try:
         data: dict[str, str] = request.get_json() # Get the json data from the request dgadjagd
@@ -212,7 +211,7 @@ def update_data(id):
 
 # api for even number generator
 @app.route('/api/generate-even-number/<int:limit>', methods = ['GET'])
-def get_even_numbers(limit):
+def get_even_numbers(limit) -> Response:
     even_numbers = list(even_num_generate(limit))
     return jsonify({"Even number values": even_numbers})   # you can also use key_value_pair instead of using this 
 
@@ -221,8 +220,8 @@ def get_even_numbers(limit):
     return jsonify(key_value_pair)
 
 
-@app.route('/square/<int:num>', methods=['GET'])
-def square(num):
+@app.route('/square/<int:num>', methods = ['GET'])
+def square(num) -> Response:
     return jsonify({'data': num**2})
 
 
