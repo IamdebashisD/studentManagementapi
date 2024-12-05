@@ -103,7 +103,7 @@ def add_student() -> Response:
             mycursor.close()
 
 # Endpoint to show all the student records
-@app.route('/show_all_data', methods=['GET'])
+@app.route('/show_all_data', methods = ['GET'])
 def students_data() -> Response:
         mycursor: None = None
         try:
