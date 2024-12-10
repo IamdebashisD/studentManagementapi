@@ -3,7 +3,7 @@ import json
 from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
 import MySQLdb.cursors
-from typing import Any, Optional, NoReturn
+from typing import Any, Optional, NoReturn, Tuple
 import MySQLdb
 import re
  
@@ -32,7 +32,7 @@ mysql = MySQL(app)
   
 # Created a route or an endpoint for create records    
 @app.route('/add_student', methods = ['GET', 'POST'])
-def add_student() -> Response:   
+def add_student() -> tuple[Response, int]:
     mycursor: None = None
     try:
         data: dict[str, str] = request.get_json()  # Get the json data from the request
