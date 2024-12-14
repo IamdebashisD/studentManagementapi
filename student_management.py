@@ -6,6 +6,7 @@ import MySQLdb.cursors
 from typing import Any, Optional, NoReturn, Tuple
 import MySQLdb
 import re
+import logging
  
 app = Flask(__name__)
 
@@ -382,7 +383,7 @@ class methodAnalyticalProccess:
         return {'data_five': 'value of method five'}
 
 @app.route('/combined_data', methods = ['GET'])
-def combined_data():
+def combined_data() -> Response:
     objectp = methodAnalyticalProccess()
     data_one = objectp.method_one()
     data_two = objectp.method_two()
@@ -429,6 +430,31 @@ def linear_search_Two() -> Response | NoReturn:
     return default_return
 
 
+# set up the log
+logging.basicConfig(
+    filename="webapp.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+@app.route('/logging_method', methods = ['POST'])
+def login_user(username: str, password: str) -> tuple[Response, int]:
+    data: dict[str, str] = request.get_json()
+    if not data or "username" not in data or "password" not in data:
+        return jsonify({"status": "error", "message": "Missing required fields: 'username' and 'password'"}), 400
+
+    username: str = data['username']
+    password: str = data['password']
+
+    logging.info(f"Login attempt for user {username}")
+
+    if username == "code_with_debashis" and password == "subscribe":
+        logging.info(f"User {username} logged in successfully")
+        return jsonify({"status": "success", "message": "Login successfully."}), 200
+    else:
+        logging.warning(f"Failed login attempt for user: {username}")
+        return jsonify({"status": "error", "message": "Invalid username or password."}), 401
+    
 
 if __name__  == "__main__":
     app.run(debug = True)
