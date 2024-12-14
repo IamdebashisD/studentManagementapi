@@ -439,22 +439,28 @@ logging.basicConfig(
 
 @app.route('/logging_method', methods = ['POST'])
 def login_user() -> tuple[Response, int]:
-    data: dict[str, str] = request.get_json()
-    if not data or "username" not in data or "password" not in data:
-        return jsonify({"status": "error", "message": "Missing required fields: 'username' and 'password'"}), 400
+    try:
+        data: dict[str, str] = request.get_json()
 
-    username: str = data['username']
-    password: str = data['password']
+        if not data or "username" not in data or "password" not in data:
+            return jsonify({"status": "error", "message": "Missing required fields: 'username' and 'password'"}), 400
+        
+        username: str = data['username']
+        password: str = data['password']
 
-    logging.info(f"Login attempt for user {username}")
+        logging.info(f"Login attempt for user {username}")
 
-    if username == "code_with_debashis" and password == "subscribe":
-        logging.info(f"User {username} logged in successfully")
-        return jsonify({"status": "success", "message": "Login successfully."}), 200
-    else:
-        logging.warning(f"Failed login attempt for user: {username}")
-        return jsonify({"status": "error", "message": "Invalid username or password."}), 401
-    
+        if username == "code_with_debashis" and password == "subscribe":
+            logging.info(f"User {username} logged in successfully")
+            return jsonify({"status": "success", "message": "Login successfully."}), 200
+        else:
+            logging.warning(f"Failed login attempt for user: {username}")
+            return jsonify({"status": "error", "message": "Invalid username or password."}), 401
+
+    except ValueError as ve:
+        return jsonify({"error": str(ve)}), 400
+    except Exception as e:
+        return jsonify({"error": "An unexpected error occurred"}), 500  
 
 if __name__  == "__main__":
     app.run(debug = True)
