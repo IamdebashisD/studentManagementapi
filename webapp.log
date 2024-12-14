@@ -10,3 +10,20 @@
 2024-12-14 18:28:47,029 - INFO -  * Restarting with stat
 2024-12-14 18:28:47,280 - WARNING -  * Debugger is active!
 2024-12-14 18:28:47,284 - INFO -  * Debugger PIN: 874-730-413
+2024-12-14 18:29:26,260 - INFO - Login attempt for user Tom
+2024-12-14 18:29:26,260 - WARNING - Failed login attempt for user: Tom
+2024-12-14 18:29:26,260 - INFO - 127.0.0.1 - - [14/Dec/2024 18:29:26] "[31m[1mPOST /logging_method HTTP/1.1[0m" 401 -
+2024-12-14 18:29:57,148 - INFO - Login attempt for user 
+2024-12-14 18:29:57,148 - WARNING - Failed login attempt for user: 
+2024-12-14 18:29:57,148 - INFO - 127.0.0.1 - - [14/Dec/2024 18:29:57] "[31m[1mPOST /logging_method HTTP/1.1[0m" 401 -
+2024-12-14 18:30:01,102 - INFO - Login attempt for user 
+2024-12-14 18:30:01,102 - WARNING - Failed login attempt for user: 
+2024-12-14 18:30:01,103 - INFO - 127.0.0.1 - - [14/Dec/2024 18:30:01] "[31m[1mPOST /logging_method HTTP/1.1[0m" 401 -
+2024-12-14 18:30:02,359 - INFO - Login attempt for user 
+2024-12-14 18:30:02,359 - WARNING - Failed login attempt for user: 
+2024-12-14 18:30:02,359 - INFO - 127.0.0.1 - - [14/Dec/2024 18:30:02] "[31m[1mPOST /logging_method HTTP/1.1[0m" 401 -
+2024-12-14 18:32:02,600 - INFO - 127.0.0.1 - - [14/Dec/2024 18:32:02] "[31m[1mPOST /logging_method HTTP/1.1[0m" 400 -
+2024-12-14 18:32:10,723 - INFO - 127.0.0.1 - - [14/Dec/2024 18:32:10] "[31m[1mPOST /logging_method HTTP/1.1[0m" 400 -
+2024-12-14 18:33:23,663 - INFO - Login attempt for user code_with_debashis
+2024-12-14 18:33:23,663 - INFO - User code_with_debashis logged in successfully
+2024-12-14 18:33:23,663 - INFO - 127.0.0.1 - - [14/Dec/2024 18:33:23] "POST /logging_method HTTP/1.1" 200 -
