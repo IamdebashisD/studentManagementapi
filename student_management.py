@@ -438,7 +438,7 @@ logging.basicConfig(
 )
 
 @app.route('/logging_method', methods = ['POST'])
-def login_user(username: str, password: str) -> tuple[Response, int]:
+def login_user() -> tuple[Response, int]:
     data: dict[str, str] = request.get_json()
     if not data or "username" not in data or "password" not in data:
         return jsonify({"status": "error", "message": "Missing required fields: 'username' and 'password'"}), 400
