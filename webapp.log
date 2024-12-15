@@ -16,3 +16,19 @@
 2024-12-14 19:22:36,697 - INFO -  * Restarting with stat
 2024-12-14 19:22:36,951 - WARNING -  * Debugger is active!
 2024-12-14 19:22:36,954 - INFO -  * Debugger PIN: 874-730-413
+2024-12-15 15:25:51,062 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-15 15:25:51,062 - INFO - [33mPress CTRL+C to quit[0m
+2024-12-15 15:25:51,064 - INFO -  * Restarting with stat
+2024-12-15 15:25:51,308 - WARNING -  * Debugger is active!
+2024-12-15 15:25:51,335 - INFO -  * Debugger PIN: 874-730-413
+2024-12-15 15:26:37,527 - INFO - Login attempt for user code_with_debashis
+2024-12-15 15:26:37,527 - INFO - User code_with_debashis logged in successfully
+2024-12-15 15:26:37,527 - INFO - 127.0.0.1 - - [15/Dec/2024 15:26:37] "POST /logging_method HTTP/1.1" 200 -
+2024-12-15 15:29:16,636 - INFO - 127.0.0.1 - - [15/Dec/2024 15:29:16] "[33mPOST /login HTTP/1.1[0m" 404 -
+2024-12-15 15:31:47,069 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-15 15:31:47,069 - INFO - [33mPress CTRL+C to quit[0m
+2024-12-15 15:31:47,070 - INFO -  * Restarting with stat
+2024-12-15 15:31:47,322 - WARNING -  * Debugger is active!
+2024-12-15 15:31:47,326 - INFO -  * Debugger PIN: 874-730-413

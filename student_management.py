@@ -452,7 +452,7 @@ def login_user() -> tuple[Response, int]:
 
         if username == "code_with_debashis" and password == "subscribe":
             logging.info(f"User {username} logged in successfully")
-            return jsonify({"status": "success", "message": "Login successfully."}), 200
+            return jsonify({"status": "success", "message": "Login successfully.", "message":f"Welcome, {username}"}), 200
         else:
             logging.warning(f"Failed login attempt for user: {username}")
             return jsonify({"status": "error", "message": "Invalid username or password."}), 401
