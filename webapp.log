@@ -56,3 +56,28 @@
 2024-12-17 19:40:35,038 - INFO -  * Restarting with stat
 2024-12-17 19:40:35,285 - WARNING -  * Debugger is active!
 2024-12-17 19:40:35,289 - INFO -  * Debugger PIN: 874-730-413
+2024-12-17 19:41:38,705 - INFO - Login attempt for user code_with_debashis
+2024-12-17 19:41:38,705 - INFO - User code_with_debashis logged in successfully
+2024-12-17 19:41:38,705 - INFO - 127.0.0.1 - - [17/Dec/2024 19:41:38] "POST /logging_method HTTP/1.1" 200 -
+2024-12-17 19:41:45,789 - INFO - Login attempt for user code_with_debashis
+2024-12-17 19:41:45,789 - INFO - User code_with_debashis logged in successfully
+2024-12-17 19:41:45,789 - INFO - 127.0.0.1 - - [17/Dec/2024 19:41:45] "POST /logging_method HTTP/1.1" 200 -
+2024-12-17 19:42:50,790 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-12-17 19:42:50,791 - INFO - [33mPress CTRL+C to quit[0m
+2024-12-17 19:42:50,792 - INFO -  * Restarting with stat
+2024-12-17 19:42:51,036 - WARNING -  * Debugger is active!
+2024-12-17 19:42:51,039 - INFO -  * Debugger PIN: 874-730-413
+2024-12-17 19:43:13,983 - INFO - Login attempt for user code_with_debashis
+2024-12-17 19:43:13,983 - INFO - User code_with_debashis logged in successfully
+2024-12-17 19:43:13,983 - INFO - 127.0.0.1 - - [17/Dec/2024 19:43:13] "POST /logging_method HTTP/1.1" 200 -
+2024-12-17 19:48:58,093 - INFO - Login attempt for user lok
+2024-12-17 19:48:58,093 - WARNING - Failed login attempt for user: lok
+2024-12-17 19:48:58,093 - INFO - 127.0.0.1 - - [17/Dec/2024 19:48:58] "[31m[1mPOST /logging_method HTTP/1.1[0m" 401 -
+2024-12-17 19:49:13,944 - INFO - Login attempt for user code_with_debashis
+2024-12-17 19:49:13,944 - INFO - User code_with_debashis logged in successfully
+2024-12-17 19:49:13,944 - INFO - 127.0.0.1 - - [17/Dec/2024 19:49:13] "POST /logging_method HTTP/1.1" 200 -
+2024-12-17 19:51:42,772 - INFO -  * Detected change in 'C:\\GitHub\\studentManagementapI\\student_management.py', reloading
+2024-12-17 19:51:42,813 - INFO -  * Restarting with stat
+2024-12-17 19:51:43,070 - WARNING -  * Debugger is active!
+2024-12-17 19:51:43,073 - INFO -  * Debugger PIN: 874-730-413
