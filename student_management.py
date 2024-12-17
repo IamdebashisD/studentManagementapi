@@ -121,7 +121,7 @@ def students_data() -> Response:
             if mycursor:
                 mycursor.close()
 
-# Create an endpointy for delete student records by specific Id
+# Create an endpoint for delete student records by specific id
 # Read operation  
 @app.route('/delete_student/<int:id>', methods = ['DELETE'])
 def delete_data(id) -> Response:
