@@ -299,18 +299,20 @@ class Employee:
         self.company_name = company_name
         Employee.number_of_objects += 1
 
-    def showDetails(self) -> None:
+    def showDetails(self) -> dict[str, str | int]:
         return {'name': self.__name, 'id': self.__id, 'position': self.developer,'age': self.age , 'company_name': self.company_name}
     
-    def get_description(self) -> None:
+    def get_description(self) -> str:
         return f'Hi my name is {self.__name}, working at {self.company_name} as a {self.developer}'
+    
     # @staticmethod    
-    def return_aList(self) -> None:
+    def return_aList(self) -> list[list[int | str | bool | float]]:
         return [
             [1,2,3,'Iron man',False,277.98],
             [2,3,65,4,True,'Captain america']
         ]
-    def list_Of_Dictionaries(self) -> None:
+    
+    def list_Of_Dictionaries(self) -> list[dict[str, dict[str, str | float]]]:
         country: list[str] = ['south korea', 'india']
         imbd_rating: list[float] = [8.4, 8.7, 8.2]
         web_series_data: list[dict] = [
@@ -321,7 +323,8 @@ class Employee:
                 'Panchayet': {'country': country[1], 'imbd rating': imbd_rating[1]}
             }
         ]
-        return web_series_data       
+        return web_series_data
+           
     def docString(self) -> None:
         '''Doc string is here'''
         return None
@@ -344,7 +347,7 @@ def test():
     userThree_description = vishal_mehra.get_description()
 
 
-    response = {
+    response: dict[dict] = {
         'Userone': {
             'user_details' : user_details,
             'user_description': user_description
@@ -371,15 +374,15 @@ def test():
 
 
 class methodAnalyticalProccess:
-    def method_one(self):
+    def method_one(self) -> dict[str, str]:
         return {'data_one': 'value of method one'}
-    def method_two(self):
+    def method_two(self) -> dict[str, str]:
         return {'data_two': 'value of method two'}
-    def method_three(self):
+    def method_three(self)-> dict[str, str]:
         return {'data_three': 'value of method three'}
-    def method_four(self):
+    def method_four(self)-> dict[str, str]:
         return {'data_four': 'value of method four'}
-    def method_five(self):
+    def method_five(self)-> dict[str, str]:
         return {'data_five': 'value of method five'}
 
 @app.route('/combined_data', methods = ['GET'])
