@@ -32,7 +32,7 @@ app.config['MYSQL_DB'] = 'students_db'
 mysql = MySQL(app)
   
 # Created a route or an endpoint for create records    
-@app.route('/add_student', methods = ['GET', 'POST'])
+@app.route('/add_student', methods = ['POST'])
 def add_student() -> tuple[Response, int]:
     mycursor: None = None
     try:
