@@ -7,7 +7,9 @@ from typing import Any, Optional, NoReturn, Tuple
 import MySQLdb
 import re
 import logging
- 
+import requests
+import datetime as dt
+
 app = Flask(__name__)
 
 def even_num_generate(limit):
@@ -464,6 +466,69 @@ def login_user() -> tuple[Response, int]:
         return jsonify({"error": str(ve)}), 400
     except Exception as e:
         return jsonify({"error": "An unexpected error occurred"}), 500  
+    
+
+
+@app.route('/curent_weather', methods = ['GET'])
+def get_weather():
+    API_KEY:str = '91f939e70741477979cbd4df2994e7e9'
+    data: dict = request.get_json()
+    if not data and 'city' not in data:
+        return jsonify({'error': 'Please provide a city Name IN JSON format!'}), 400
+    
+    try:
+        CITY_NAME = data['city']
+        BASE_URL:str = f'''https://api.openweathermap.org/data/2.5/weather?q={CITY_NAME},In&appid={API_KEY}&units=metric'''
+        response = requests.get(BASE_URL)
+        data: dict[str,int,float, Any] = response.json()
+        
+        if data and data.get('coord') and data.get('weather') and data.get('main') and data.get('cod') == 200:
+            longitude = data['coord']['lon']
+            latitude = data['coord']['lat']
+            main = data['weather'][0].get('main', 'No haze availbale')
+            description = data['weather'][0].get('description', 'No description available')
+            if data['base'] and len(data['base']) > 0:
+                base = data.get('base', 'No base available')
+
+            if len(data['main']) > 0:
+                temperature = data['main']['temp']   
+                feels_like = data['main']['feels_like']   
+                temp_min = data['main']['temp_min']   
+                temp_max = data['main']['temp_max']   
+                pressure = data['main']['pressure']   
+                humidity = data['main']['humidity']   
+                sea_level = data['main']['sea_level']   
+                ground_level = data['main']['grnd_level']
+            if data.get('visibility'):
+                visibility = data['visibility']
+
+            if data.get('wind') and len(data['wind']) > 0:
+                wind_speed = data['wind']['speed']
+                wind_direction = data['wind']['deg']
+
+            if data.get('clouds'):
+                cloudiness = data['clouds']['all']
+
+            if data.get('sys', {}) and data.get('timezone') is not None:
+                type_info = data['sys']['type']
+                location_id = data['sys']['id']
+                country_code = data['sys']['country']
+                sunrise_time = dt.datetime.fromtimestamp(data['sys']['sunrise'] + data['timezone'])
+                sunset_time = dt.datetime.fromtimestamp(data['sys']['sunset'] + data['timezone'])
+            
+            if data.get('name') and data.get('timezone'):
+                timezone = data['timezone']
+                city_name = data.get('name')
+                location_id = data['id']
+
+            respose = (longitude, latitude, main, description, base, temperature, feels_like, temp_min, temp_max, type_info,
+                    pressure, humidity, sea_level, ground_level, visibility, wind_speed, wind_direction, cloudiness,
+                    location_id, country_code, city_name, sunrise_time, sunset_time, timezone)
+            return jsonify({'result': respose}), 200
+        else:
+            return jsonify({'message': 'Failed to fetch'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 if __name__  == "__main__":
     app.run(debug = True)
