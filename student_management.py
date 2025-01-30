@@ -526,12 +526,13 @@ def get_weather():
                 location_id = data['id']
 
             response = {
-                "City name": city_name, "Country code": country_code, "Longitude": longitude, "Latitude": latitude, "main": main,
-                "description": description, "Base": base, "temperature": f'{temperature}\u00B0C', "feels_like": feels_like, "Maximun temperature": temp_max,
-                "Minimun temperature": temp_min, "type_info": type_info, "pressure": pressure, "humidity": humidity, "sunrise time": sunrise_time,
+                "City name": city_name, "Country code": country_code, "Longitude": longitude, "Latitude": latitude, 
+                "main": main, "description": description, "Base": base, "temperature": f'{temperature}\u00B0C', 
+                "feels_like": feels_like, "Maximun temperature": temp_max, "Minimun temperature": temp_min, 
+                "type_info": type_info, "pressure": pressure, "humidity": humidity, "sunrise time": sunrise_time, 
                 "sunset time": sunset_time, "timezone": timezone, "wind speed": wind_speed, "wind direction": wind_direction,
-                "country code": country_code, "cloudiness": cloudiness, "location id": location_id, "ground level": ground_level,"see level": sea_level,
-                "visibility": visibility
+                "country code": country_code, "cloudiness": cloudiness, "location id": location_id, 
+                "ground level": ground_level,"see level": sea_level, "visibility": visibility
             }
             return jsonify({'result': response}), 200
         else:
