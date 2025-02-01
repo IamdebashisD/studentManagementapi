@@ -539,13 +539,16 @@ def get_weather():
             return jsonify({'message': 'Failed to fetch'}), 404
 
     except requests.exceptions.HTTPError as http_err:
-        if response.status_code == 404:
-            return jsonify({'error': 'City not found'}), 404
+        if http_err.response is not None:
+            if http_err.response.status_code == 404:
+                return jsonify({'error': 'City not found'}), 404
+            else:
+                return jsonify({'error': f'HTTP error occured {http_err}'}), http_err.response.status_code    
         else:
-            return jsonify({'error': f'HTTP error occured {http_err}'}), response.status_code    
+            return jsonify({'error': f'An HTTP error occured {http_err}'}), 500                    
 
     except Exception as err:
-        return jsonify({'error': f'An error occured {str(err)}'})
+        return jsonify({'error': f'An error occured {str(err)}'}) # Default to 500 if no response
 
 if __name__  == "__main__":
     app.run(debug = True)
