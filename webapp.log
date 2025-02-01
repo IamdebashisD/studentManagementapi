@@ -1,0 +1,32 @@
+2025-02-01 22:11:35,430 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-02-01 22:11:35,430 - INFO - [33mPress CTRL+C to quit[0m
+2025-02-01 22:11:35,432 - INFO -  * Restarting with stat
+2025-02-01 22:11:36,019 - WARNING -  * Debugger is active!
+2025-02-01 22:11:36,026 - INFO -  * Debugger PIN: 874-730-413
+2025-02-01 22:14:35,064 - INFO - 127.0.0.1 - - [01/Feb/2025 22:14:35] "POST /current_weather HTTP/1.1" 200 -
+2025-02-01 22:14:43,317 - INFO - 127.0.0.1 - - [01/Feb/2025 22:14:43] "POST /current_weather HTTP/1.1" 200 -
+2025-02-01 22:14:50,230 - INFO - 127.0.0.1 - - [01/Feb/2025 22:14:50] "[33mPOST /current_weather HTTP/1.1[0m" 404 -
+2025-02-01 22:15:49,408 - INFO - 127.0.0.1 - - [01/Feb/2025 22:15:49] "POST /current_weather HTTP/1.1" 200 -
+2025-02-01 22:18:55,227 - INFO - 127.0.0.1 - - [01/Feb/2025 22:18:55] "POST /current_weather HTTP/1.1" 200 -
+2025-02-01 22:25:41,398 - INFO - 127.0.0.1 - - [01/Feb/2025 22:25:41] "[31m[1mPOST /current_weather HTTP/1.1[0m" 415 -
+2025-02-01 22:25:48,231 - INFO - 127.0.0.1 - - [01/Feb/2025 22:25:48] "POST /current_weather HTTP/1.1" 200 -
+2025-02-01 22:26:02,885 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-02-01 22:26:02,886 - INFO - [33mPress CTRL+C to quit[0m
+2025-02-01 22:26:02,886 - INFO -  * Restarting with stat
+2025-02-01 22:26:03,483 - WARNING -  * Debugger is active!
+2025-02-01 22:26:03,488 - INFO -  * Debugger PIN: 874-730-413
+2025-02-01 22:26:11,242 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-02-01 22:26:11,242 - INFO - [33mPress CTRL+C to quit[0m
+2025-02-01 22:26:11,243 - INFO -  * Restarting with stat
+2025-02-01 22:26:11,870 - WARNING -  * Debugger is active!
+2025-02-01 22:26:11,876 - INFO -  * Debugger PIN: 874-730-413
+2025-02-01 22:28:29,388 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-02-01 22:28:29,389 - INFO - [33mPress CTRL+C to quit[0m
+2025-02-01 22:28:29,390 - INFO -  * Restarting with stat
+2025-02-01 22:28:29,978 - WARNING -  * Debugger is active!
+2025-02-01 22:28:29,983 - INFO -  * Debugger PIN: 874-730-413
+2025-02-01 22:28:32,482 - INFO - 127.0.0.1 - - [01/Feb/2025 22:28:32] "POST /current_weather HTTP/1.1" 200 -
