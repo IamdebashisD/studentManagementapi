@@ -423,7 +423,7 @@ def linear_search_Two() -> Response | NoReturn:
         return jsonify({"message": "Invalid input!, array and target is required"}), 400
 
     target = int(target)
-    default_return: Response = jsonify({'message': 'Target not found'}), 404
+    default_value_return: Response = jsonify({'message': 'Target not found'}), 404
 
     # Perform the linear search
     for index , value in enumerate(my_array):
@@ -432,7 +432,7 @@ def linear_search_Two() -> Response | NoReturn:
                            "message": "target found in the container",
                            "position": index+1
             }), 200
-    return default_return
+    return default_value_return
 
 
 # set up the log
